@@ -1,9 +1,12 @@
 import { Vector2 } from "./Vector2"
 
 export const useAnimationCanvas = (canvas: HTMLCanvasElement) => {
+
+  const dpr = window.devicePixelRatio || 1;
+
   const setSize = (sizeVector: Vector2) => {
-    canvas.width = sizeVector.x
-    canvas.height = sizeVector.y
+    canvas.width = sizeVector.x * dpr
+    canvas.height = sizeVector.y * dpr
   }
 
   let lastTimestamp = 0;
@@ -57,6 +60,7 @@ export const useAnimationCanvas = (canvas: HTMLCanvasElement) => {
 
   return {
     math,
+    dpr,
     setSize,
     startAnimationLoop
   }

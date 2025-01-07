@@ -18,7 +18,7 @@ window.addEventListener('resize', () => {
   setSize(global.v2_canvasSize);
 });
 
-const { startAnimationLoop, setSize, math } = useAnimationCanvas(global.canvas);
+const { startAnimationLoop, setSize, math, dpr } = useAnimationCanvas(global.canvas);
 
 let yy = 0
 document.addEventListener('mousemove', (e) => {
@@ -55,7 +55,7 @@ const createRunner = (ctx: CanvasRenderingContext2D, color: string) => {
       (global.v2_canvasSize.y / 2) * rand
 
     y = math.lerp(y, targetY, lerpSpeed);
-    x = x + (math.clampedLerp(0, global.canvas.width / 2, 0.005)) * rand;
+    x = x + (math.clampedLerp(0, (global.canvas.width / dpr) / 2, 0.005)) * rand;
     
     return { x, y, degrees }
   }
@@ -101,7 +101,7 @@ let yellowSnakeX = 0, yellowSnakeY = 0
 startAnimationLoop((currentFPS, currentTime) => {
   const { ctx } = global;
   ctx.save();
-  ctx.clearRect(0, 0, global.canvas.width, global.canvas.height);
+  ctx.clearRect(0, 0, (global.canvas.width / dpr), (global.canvas.height / dpr));
   setSize(global.v2_canvasSize);
 
   ctx.translate(-cameraOffsetX, 0);
@@ -110,8 +110,8 @@ startAnimationLoop((currentFPS, currentTime) => {
 
   
   if (yy) {
-    let mouseFactorY = y * (yy / global.canvas.height)
-    y = y + mouseFactorY - (global.canvas.height / 2)
+    let mouseFactorY = y * (yy / (global.canvas.height / dpr))
+    y = y + mouseFactorY - ((global.canvas.height / dpr) / 2)
   }
   // x = x + mouseFactorX - (global.canvas.width / 2)
 
@@ -126,14 +126,14 @@ startAnimationLoop((currentFPS, currentTime) => {
   yellowSnake.drawAt(yellowSnakeX, yellowSnakeY, cameraOffsetX)
 
 
-  cameraOffsetX = x < global.canvas.width ? 0 : x - global.canvas.width;
+  cameraOffsetX = x < (global.canvas.width / dpr) ? 0 : x - (global.canvas.width / dpr);
   cameraOffsetX = math.lerp(cameraOffsetX, x, 0.1);
   
   // Show FPS
   ctx.font = '48px Mono';
   ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'left';
-  ctx.fillText(currentFPS.toFixed(0), cameraOffsetX + 30, 60)
+  ctx.fillText(dpr.toFixed(2), cameraOffsetX + 30, 60)
   
   ctx.restore();
 });
