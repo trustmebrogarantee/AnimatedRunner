@@ -21,9 +21,9 @@ window.addEventListener('resize', () => {
 const { startAnimationLoop, setSize, math, dpr } = useAnimationCanvas(global.canvas);
 
 let yy = 0
-document.addEventListener('mousemove', (e) => {
+// document.addEventListener('mousemove', (e) => {
   // yy = e.clientY;
-});
+// });
 
 const MAX_DEGREES = 360
 const DEGREE = (Math.PI * 2) / MAX_DEGREES
