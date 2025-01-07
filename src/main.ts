@@ -133,7 +133,7 @@ startAnimationLoop((currentFPS, currentTime) => {
   ctx.font = '48px Mono';
   ctx.fillStyle = '#ffffff';
   ctx.textAlign = 'left';
-  ctx.fillText(dpr.toFixed(2), cameraOffsetX + 30, 60)
+  ctx.fillText(dpr.toFixed(2) + ':' + currentFPS, cameraOffsetX + 30, 60)
   
   ctx.restore();
 });
