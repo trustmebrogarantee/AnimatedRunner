@@ -22,7 +22,7 @@ const { startAnimationLoop, setSize, math, dpr } = useAnimationCanvas(global.can
 
 let yy = 0
 document.addEventListener('mousemove', (e) => {
-  yy = e.clientY;
+  // yy = e.clientY;
 });
 
 const MAX_DEGREES = 360
@@ -55,7 +55,7 @@ const createRunner = (ctx: CanvasRenderingContext2D, color: string) => {
       (global.v2_canvasSize.y / 2) * rand
 
     y = math.lerp(y, targetY, lerpSpeed);
-    x = x + (math.clampedLerp(0, (global.canvas.width / dpr) / 2, 0.005)) * rand;
+    x = x + (math.clampedLerp(0, (global.canvas.width) / 2, 0.005)) * rand;
     
     return { x, y, degrees }
   }
@@ -101,7 +101,7 @@ let yellowSnakeX = 0, yellowSnakeY = 0
 startAnimationLoop((currentFPS, currentTime) => {
   const { ctx } = global;
   ctx.save();
-  ctx.clearRect(0, 0, (global.canvas.width / dpr), (global.canvas.height / dpr));
+  ctx.clearRect(0, 0, (global.canvas.width), (global.canvas.height));
   setSize(global.v2_canvasSize);
 
   ctx.translate(-cameraOffsetX, 0);
@@ -110,8 +110,8 @@ startAnimationLoop((currentFPS, currentTime) => {
 
   
   if (yy) {
-    let mouseFactorY = y * (yy / (global.canvas.height / dpr))
-    y = y + mouseFactorY - ((global.canvas.height / dpr) / 2)
+    let mouseFactorY = y * (yy / (global.canvas.height))
+    y = y + mouseFactorY - ((global.canvas.height) / 2)
   }
   // x = x + mouseFactorX - (global.canvas.width / 2)
 
@@ -126,7 +126,7 @@ startAnimationLoop((currentFPS, currentTime) => {
   yellowSnake.drawAt(yellowSnakeX, yellowSnakeY, cameraOffsetX)
 
 
-  cameraOffsetX = x < (global.canvas.width / dpr) ? 0 : x - (global.canvas.width / dpr);
+  cameraOffsetX = x < (global.canvas.width) ? 0 : x - (global.canvas.width);
   cameraOffsetX = math.lerp(cameraOffsetX, x, 0.1);
   
   // Show FPS
